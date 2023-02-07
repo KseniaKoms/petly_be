@@ -12,7 +12,10 @@ export class UserService implements IUserService {
   async createUser(user: UserDto): Promise<User> {
     try {
       const password = await hashPassword(user.password);
-      const newUser = await this.userRepository.create({ ...user, password });
+      const newUser = this.userRepository.create({
+        ...user,
+        password,
+      });
 
       return await this.userRepository.save(newUser);
     } catch (error) {

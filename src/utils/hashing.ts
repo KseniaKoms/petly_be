@@ -1,10 +1,11 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
-export async function hashPassword(password: string): Promise<string> {
+export async function hashPassword(password?: string): Promise<string | undefined> {
   const salt = await bcrypt.genSalt();
-
-  return bcrypt.hash(password, salt);
+  if (password) {
+    return bcrypt.hash(password, salt);
+  }
 }
 
 export async function comparePassword(hashPassword: string, password: string): Promise<boolean> {
